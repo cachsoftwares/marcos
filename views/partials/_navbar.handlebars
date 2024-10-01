@@ -1,0 +1,76 @@
+<nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container">
+
+        <div class="navbar-brand">
+            <a class="navbar-item has-text-light" href="/">
+                <img src="/img/logo/2.png" alt="FARM">
+            </a>
+
+            <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false"
+                data-target="navbarBasicExample">
+                <i class="bx bx-menu bx-sm has-text-white"></i>
+            </a>
+        </div>
+
+        <div id="navbarBasicExample" class="navbar-menu">
+            <div class="navbar-start">
+                {{#if user}}
+                <a href="/venda" class="navbar-item has-text-white">
+                    Venda
+                </a>
+                {{else}}
+                <a href="/venda" class="navbar-item has-text-white">
+                    Produtos
+                </a>
+                {{/if}}
+
+                {{#if admin}}
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link has-text-white  is-arrowless">
+                        ADMIN
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        <a href="/admin/estoque" class="navbar-item has-text-white">
+                            Estoque
+                        </a>
+                        <a href="/admin/users" class="navbar-item has-text-white">
+                            Funcionários
+                        </a>
+                        <a href="/admin/estatistica" class="navbar-item has-text-white">
+                            Estatísticas
+                        </a>
+                    </div>
+                </div>
+                {{/if}}
+
+            </div>
+
+            <div class="navbar-end mr-5">
+                <div class="navbar-item has-text-white has-dropdown is-hoverable">
+                    <a class="navbar-link has-text-white is-arrowless">
+                        <i class="bx bxs-user-circle bx-sm"></i>
+                    </a>
+
+                    <div class="navbar-dropdown">
+                        {{#unless user}}
+                        <a href="/user/login" class="navbar-item has-text-white">
+                            Entrar
+                        </a>
+                        {{else}}
+                        <a href="/user/perfil" class="navbar-item has-text-white">
+                            Perfil
+                        </a>
+                        <hr class="navbar-divider">
+                        <form action="/user/logout" method="post">
+                            <button class="navbar-item has-text-white" style="background: transparent;">
+                                <i class="bx bxs-log-out-circle has-text-danger"></i> sair
+                            </button>
+                        </form>
+                        {{/unless}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

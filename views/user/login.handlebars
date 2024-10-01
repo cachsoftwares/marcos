@@ -1,0 +1,61 @@
+<div class="container top-50">
+
+    <div class="columns">
+
+        <div
+            class="column is-10-mobile is-offset-1-mobile is-6-tablet is-offset-3-tablet is-4-desktop is-offset-4-desktop">
+
+            {{#unless admin_found}}
+            <div class="box admin">
+                <p class="is-size-4">Comece por Cadastrar um Adminstrador</p>
+
+                <div class="mt-6">
+                    <form action="/admin/cadastro" method="post">
+                        <button class="button is-ghost has-text-light" type="submit">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+            {{else}}
+            <h1 class="is-size-1 has-text-centered upper-text mb-5">Entrar</h1>
+
+            <form method="post" action="/user/login">
+                <div class="field">
+                    <label class="label">Telefone</label>
+                    <div class="control">
+                        <input name="ident" id="ident" class="input" type="number" value="945217566">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Senha</label>
+                    <div class="control">
+                        <input name="senha" id="senha" class="input" type="password" value="123456">
+                    </div>
+                </div>
+
+                <div>
+                    <p>
+                        <label>
+                            <input type="checkbox" onclick="ver_senha()" />
+                            <span>Ver Senha</span>
+                        </label>
+                    </p>
+                </div>
+
+                <div class="columns mt-3">
+                    <div class="column is-6-mobile is-offset-3-mobile is-4-tablet is-offset-4-tablet">
+                        <button id="btn_login" class="button is-success has-text-light w-100">entrar</button>
+                    </div>
+                </div>
+            </form>
+            {{/unless}}
+
+        </div>
+    </div>
+</div>
+
+<script defer>
+    document.body.onload = () => {
+        document.getElementById('btn_login').click();
+    }
+</script>

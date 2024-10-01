@@ -1,0 +1,20 @@
+<div class="columns">
+    <div
+        class="column is-10-mobile is-offset-1-mobile is-6-tablet is-offset-3-tablet is-4-desktop is-offset-4-desktop has-text-centered">
+        {{#if success_msg}}
+        <div class="success_msg msg_float box has-background-success has-text-white" style="width: 50% !important;">
+            <p class="flash-msg">
+                {{success_msg}}
+            </p>
+        </div>
+        {{/if}}
+
+        {{#if error_msg}}
+        <div class="error_msg msg_float box has-background-danger has-text-white" style="width: 50% !important;">
+            <p class="flash-msg">
+                {{error_msg}}
+            </p>
+        </div>
+        {{/if}}
+    </div>
+</div>

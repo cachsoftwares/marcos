@@ -1,0 +1,121 @@
+<form action="/admin/pesquisa" method="post">
+    <div class="columns is-centered mb-6">
+
+        <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-4-desktop">
+            <div class="field">
+                <div class="control">
+                    <input type="text" class="input" name="pesquisa" id="pesquisa" placeholder="Pesquisa pelo Nome">
+                </div>
+            </div>
+        </div>
+        <div class="column is-2-mobile is-offset-5-mobile is-2-tablet is-2-desktop">
+            <button type="submit" class="button">
+                <i class="bx bx-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="column is-10-mobile is-offset-1-mobile is-5-tablet is-4-desktop">
+    <a href="/admin/produto/cadastro" class="button is-small primary">Novo</a>
+</div>
+<div class="columns is-mobile is-multiline is-centered">
+    {{#each prods}}
+    <div class="column is-10-mobile is-5-tablet is-4-desktop">
+        <div class="card prod">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-content has-text-centered">
+                        <p class="title is-4">{{nome}}</p>
+                        <span class="tag">{{variacao}}</span>
+                        <span class="tag">{{especificidade}}</span>
+                        <span class="tag">{{origem}}</span>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <div class="tags has-addons is-centered">
+                        <span class="tag primary"><span class="estoque">{{estoque}}</span> uni</span>
+                        <span class="tag">Estoque</span>
+                        <span class="tag primary estoque_kz">xx</span>
+                    </div>
+                    <hr>
+                    <div class="tags has-addons is-centered">
+                        <span class="tag">P.Compra</span>
+                        <span class="tag primary"><span class="preco_compra">{{preco_compra}}</span>KZ</span>
+                        <span class="tag primary"><span class="preco_venda">{{preco_venda}}</span>KZ</span>
+                        <span class="tag">P.Venda</span>
+                    </div>
+                    <div class="tags has-addons is-centered">
+                        <span class="tag">Lucro</span>
+                        <span class="tag primary"><span class="lucro">xx</span></span>
+                    </div>
+                    <div class="tags has-addons is-centered">
+                        <span class="tag primary has-text-success-light validade">{{validade}}</span>
+                        <span class="tag">Validade</span>
+                        <span class="tag primary has-text-success-light validade_set"></span>
+                    </div>
+                </div>
+            </div>
+            <footer class="card-footer">
+                <div class="card-footer-item">
+                    <form action="/admin/prod/delete/{{_id}}" method="post">
+                        <button type="submit">
+                            <span class="tag is-delete has-background-danger"></span>
+                        </button>
+                    </form>
+                </div>
+                <a href="/admin/estoque/adicionar/{{_id}}" class="card-footer-item">
+                    <span class="tag primary"><i class="bx bx-plus"></i></span>
+                </a>
+                <a href="/admin/prod/edit/{{_id}}" class="card-footer-item">
+                    <span class="tag"><i class="bx bx-edit"></i></span>
+                </a>
+            </footer>
+        </div>
+    </div>
+    {{else}}
+    <div class="column is-10-mobile is-6-tablet is-4-desktop">
+        <div class="box">
+            <p class="is-size-4 has-text-centered has-text-info upper-text">
+                Sem Produtos
+            </p>
+            <p class="is-size-6 has-text-centered low-text mt-5">
+                Os Adminstradores ainda não Cadastraram os Produtos
+            </p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+    var prods_count = document.getElementsByClassName('prod').length;
+    var dataAtual = new Date();
+
+    for (let cont = 0; cont < prods_count; cont++) {
+        document.getElementsByClassName('lucro')[cont].innerText =
+            Number(
+                document.getElementsByClassName('preco_venda')[cont].textContent
+                -
+                document.getElementsByClassName('preco_compra')[cont].textContent
+            ) + 'KZ';
+
+        document.getElementsByClassName('estoque_kz')[cont].innerText =
+            Number(
+                document.getElementsByClassName('preco_venda')[cont].textContent
+                *
+                document.getElementsByClassName('estoque')[cont].textContent
+            ) + 'KZ';
+
+        var validade = new Date(document.getElementsByClassName('validade')[cont].textContent);
+
+        var diferencaEmMilissegundos = validade - dataAtual;
+
+        var milissegundosPorDia = 24 * 60 * 60 * 1000;
+        var diasRestantes = Math.ceil(diferencaEmMilissegundos / milissegundosPorDia);
+
+        document.getElementsByClassName('validade_set')[cont].innerText += diasRestantes + " dias";
+
+    }
+
+
+</script>

@@ -1,0 +1,91 @@
+
+<form action="/pesquisa" method="post">
+    <div class="columns is-centered mb-6">
+
+        <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-4-desktop">
+            <div class="field">
+                <div class="control">
+                    <input type="text" class="input" name="pesquisa" id="pesquisa" placeholder="Pesquisa pelo Nome">
+                </div>
+            </div>
+        </div>
+        <div class="column is-2-mobile is-offset-5-mobile is-2-tablet is-2-desktop">
+            <button type="submit" class="button">
+                <i class="bx bx-search"></i>
+            </button>
+        </div>
+    </div>
+</form>
+<div class="columns container is-mobile is-multiline">
+    {{#each prods}}
+    <div class="column is-12-mobile is-6-tablet is-4-desktop">
+        <div class="box">
+            <article class="media">
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong class="upper-text is-skeleton">
+                                <span>{{nome}}</span>
+                                <span><sup>{{estoque}}</sup></span>
+                                <span><sup>{{vendidos}}</sup></span>
+                            </strong><br>
+
+                            <span class="tag is-skeleton">{{variacao}}</span>
+                            <span class="tag is-skeleton">{{especificidade}}</span>
+                            <span class="tag is-skeleton">{{origem}}</span>
+                            <br />
+                        </p>
+                    </div>
+                    <span class="has-text-right money is-skeleton">{{preco_venda}}KZ</span>
+                </div>
+            </article>
+
+            {{#if ../user}}
+            <form method="post" action="/vender">
+            <input type="hidden" name="id" value="{{_id}}">
+            <input type="hidden" name="nome" value="{{nome}}">
+            <input type="hidden" name="variacao" value="{{variacao}}">
+            <input type="hidden" name="especificidade" value="{{especificidade}}">
+            <input type="hidden" name="origem" value="{{origem}}">
+            <input type="hidden" name="preco_venda" value="{{preco_venda}}">
+                <div class="columns is-mobile is-vcentered">
+                    <div class="column is-narrow">
+                        <div class="field">
+                            <div class="control is-small">
+                                <input name="quantidade" class="input is-small is-skeleton" type="number" min="1" value="1" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="column is-narrow">
+                        <button type="submit" class="button is-skeleton is-success has-text-white is-small">
+                            <i class="bx bx-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            {{/if}}
+        </div>
+    </div>
+    {{else}}
+    <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-offset-3-tablet is-4-desktop is-offset-4-desktop">
+        <div class="box">
+            <p class="is-size-4 has-text-centered has-text-info upper-text">
+                Sem Produtos
+            </p>
+            <p class="is-size-6 has-text-centered low-text mt-5">
+                Os Adminstradores ainda não Cadastraram os Produtos
+            </p>
+        </div>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+    setTimeout(() => {
+        setInterval(() => {
+            if (document.querySelector('.is-skeleton')) {
+                document.querySelector('.is-skeleton').classList.remove('is-skeleton');
+            }
+        }, 50);
+    }, 100);
+</script>

@@ -1,0 +1,69 @@
+<div class="columns">
+
+    <div class="column 
+                            is-10-mobile is-offset-1-mobile
+                            is-8-tablet is-offset-2-tablet
+                            is-6-desktop is-offset-3-desktop">
+
+        <h1 class="is-size-1 has-text-centered upper-text mb-5">Adicionar Estoque</h1>
+        <div class="columns is-mobile is-multiline is-centered">
+
+            <div class="column is-narrow">
+                <div class="card">
+                    <form action="/admin/estoque/adicionar/{{prod._id}}" method="post">
+
+                        <div class="card-content">
+                            <div class="media">
+                                <div class="media-content has-text-centered">
+                                    <p class="title is-4">{{prod.nome}}</p>
+                                    <span class="detalhe">{{prod.variacao}}</span>
+                                    <span class="detalhe">{{prod.especificidade}}</span>
+                                    <span class="detalhe">{{prod.origem}}</span>
+                                </div>
+                            </div>
+
+                            <div class="content">
+                                <div class="tags has-addons is-centered">
+                                    <span class="tag">Estoque</span>
+                                    <span class="tag primary">{{prod.estoque}}</span>
+                                </div>
+                                <div class="tags has-addons is-centered">
+                                    <span class="tag primary has-text-success-light validade">{{prod.validade}}</span>
+                                    <span class="tag">Validade</span>
+                                    <span class="tag primary has-text-success-light validade_set"></span>
+                                </div>
+
+                                <div class="field">
+                                    <label class="label has-text-centered">Estoque a Adicionar</label>
+                                    <div class="control">
+                                        <input name="estoque" id="estoque" class="input" type="number" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <footer class="card-footer primary-opac">
+                            <div class="card-footer-item">
+                                <button type="submit" class="button primary">
+                                    <span class="has-text-white upper-text">Feito</span>
+                                </button>
+                            </div>
+                        </footer>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    var dataAtual = new Date();
+    var validade = new Date(document.getElementsByClassName('validade')[0].textContent);
+
+    var diferencaEmMilissegundos = validade - dataAtual;
+    var milissegundosPorDia = 24 * 60 * 60 * 1000;
+    var diasRestantes = Math.ceil(diferencaEmMilissegundos / milissegundosPorDia);
+
+    document.getElementsByClassName('validade_set')[0].innerText += diasRestantes + " dias";
+</script>

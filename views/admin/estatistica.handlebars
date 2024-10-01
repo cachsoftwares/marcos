@@ -1,0 +1,109 @@
+<script src="/js/chart.js"></script>
+
+
+<div class="is-hidden">
+    {{#each prods}}
+    <span class="prod_nome">{{nome}}</span>
+    <span class="prod_variacao">{{variacao}}</span>
+    <span class="prod_especificidade">{{especificidade}}</span>
+    <span class="prod_origem">{{origem}}</span>
+    <span class="prod_vendidos">{{vendidos}}</span>
+    {{/each}}
+</div>
+
+<div class="box column is-10-tablet is-offset-1-tablet is-8-desktop is-offset-2-desktop">
+    <h1 class="is-size-3 upper-text">Venda do Mês</h1>
+    <hr>
+    <div id="chart_30dias_content" class="is-hidden-mobile">
+        <div>
+            <canvas id="chart_30dias"></canvas>
+        </div>
+
+        <script>
+
+            const ctx_chart_30dias = document.getElementById('chart_30dias');
+
+            new Chart(ctx_chart_30dias, {
+                type: 'line',
+                data: {
+                    labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,],
+                    datasets: [{
+                        label: 'Valor',
+                        data: [10500, 11100, 14150, 12500, 10500, 11100, 14150, 12500, 20300, 7100, 14150, 14200, 10500, 33100, 14150, 12500, 16500, 11100, 10150, 12500],
+                        borderWidth: 2,
+                        borderColor: '#009999'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+
+    <div class="is-hidden-tablet">
+        <p class="is-size-6 upper-text has-text-centered">
+            <strong>
+                Este Gráfico não pode ser visualizado em
+                <span class="tag is-medium primary">telas pequenas</span><br>
+                Experiemente virar o Telefone
+            </strong>
+        <div class="tags has-addons is-centered mt-3">
+            <span class="tag">Largura</span>
+            <span class="tag is-primary">
+                < 769px</span>
+        </div>
+        </p>
+    </div>
+</div>
+
+<div class="box column is-10-tablet is-offset-1-tablet is-8-desktop is-offset-2-desktop">
+    <h1 class="is-size-3 upper-text">Produtos mais Vendidos</h1>
+    <hr>
+    <div id="chart_raking_bar_tab" class="col s12 top-50">
+        <div>
+            <canvas id="chart_raking_bar"></canvas>
+        </div>
+
+        <script>
+
+            var nomes_array = [];
+            var vendidos_array = [];
+
+            for (let cont = 0; cont < 5; cont++) {
+                nomes_array.push(document.getElementsByClassName('prod_nome')[cont].textContent + ' ' + document.getElementsByClassName('prod_variacao')[cont].textContent + ' ' + document.getElementsByClassName('prod_especificidade')[cont].textContent + ' ' + document.getElementsByClassName('prod_origem')[cont].textContent);
+                vendidos_array.push(document.getElementsByClassName('prod_vendidos')[cont].textContent);
+            }
+
+
+            const ctx_chart_raking_bar = document.getElementById('chart_raking_bar');
+
+            new Chart(ctx_chart_raking_bar, {
+                type: 'bar',
+                data: {
+                    labels: nomes_array,
+                    datasets: [{
+                        label: 'VENDIDOS',
+                        data: vendidos_array,
+                        borderWidth: 1,
+                        backgroundColor: '#009999'
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                        },
+                        x: {
+                            display: false
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>

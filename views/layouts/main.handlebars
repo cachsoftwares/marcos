@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    {{!--
+    <meta http-equiv="refresh" content="1"> --}}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virgo+Mongo+B+BOX</title>
+    <link href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="shortcut icon" href="/img/logo/2.png" type="image/x-icon">
+</head>
+
+<body>
+
+    {{>_navbar}}
+
+    <main>
+        {{!-- {{>_msg}} --}}
+
+        <div class="columns">
+            <div
+                class="column is-10-mobile is-6-tablet is-4-desktop is-offset-1-mobile is-offset-3-tablet is-offset-4-desktop has-text-centered">
+                {{#if error}}
+                <div class="error_msg box has-background-danger has-text-light py-2">
+                    <p class="flash-msg">
+                        {{error}}
+                    </p>
+                </div>
+                {{else}}
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="top-50">
+            <div class="container">
+                <a onclick="history.back()" class="button is-ghost">
+                    <i class="bx bx-chevron-left"></i>
+                </a>
+
+                {{{body}}}
+            </div>
+        </div>
+    </main>
+
+    {{>_footer}}
+
+    <script src="/js/jquery.js"></script>
+    <script src="/js/init.js"></script>
+
+</body>
+
+</html>

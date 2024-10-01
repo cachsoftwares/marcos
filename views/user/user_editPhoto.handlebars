@@ -1,0 +1,51 @@
+<div class="columns is-centered">
+    <div class="column is-10-mobile is-4-tablet is-3-desktop is-2-fullhd is-offset-1-mobile is-centered">
+        <div class="box has-text-centered">
+            <p class="is-size-4 upper-text mb-5">Atualizar Foto</p>
+            <form action="/user/edit/photo" method="post" enctype="multipart/form-data">
+                <input type="hidden" name="ident" value="{{user.ident}}">
+
+                <div id="file-photo" class="file has-name is-boxed">
+                    <label class="file-label w-100">
+                        <input class="file-input" type="file" name="foto" accept="image/*" />
+                        <span class="file-cta">
+                            <span class="file-icon">
+                                <i class="bx bx-upload bx-sm primary-text"></i>
+                            </span>
+                            <span class="file-label">Selecionar</span>
+                        </span>
+                        <input class="file-name w-100" name="fotoText" type="text" value="{{user.foto}}">
+                        {{!-- <span class="file-name w-100" name="fotoText">{{user.foto}}</span> --}}
+                    </label>
+                </div>
+                <div>
+                    <button type="submit" class="button is-success has-text-light">Atualizar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="columns unselected">
+    <div class="column is-10-mobile is-6-tablet is-4-desktop is-offset-1-mobile is-offset-3-tablet is-offset-4-desktop">
+        {{#each erros}}
+        <div class="error_msg box py-3 has-background-danger has-text-white has-text-centered">
+            <p class="flash-msg">
+                {{texto}}
+            </p>
+        </div>
+        {{else}}
+
+        {{/each}}
+    </div>
+</div>
+
+<script>
+    const fileInput = document.querySelector("#file-photo input[type=file]");
+    fileInput.onchange = () => {
+        if (fileInput.files.length > 0) {
+            const fileName = document.querySelector("#file-photo .file-name");
+            fileName.value = fileInput.files[0].name;
+        }
+    };
+</script>

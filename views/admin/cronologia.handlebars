@@ -1,0 +1,150 @@
+{{>_tools}}
+
+<div class="_hide">
+    páginas: <span id="pages">{{pages}}</span><br>
+    página atual: <span id="_page">{{_page}}</span><br>
+    cronos_count: <span id="cronos_count">{{cronos_count}}</span><br>
+    cronos_primeiro: <span id="cronos_primeiro"></span><br>
+    cronos_ultimo: <span id="cronos_ultimo"></span><br>
+</div>
+
+<div>
+    <h4>Cronologia</h4>
+    <hr>
+    <a href="#modal_confirmacao_empy_crono" class="btn red right top-22 modal-trigger waves-effect">
+        <i class="fas fa-trash"></i>
+    </a>
+    
+
+    <div class="row">
+        <div class="col s10 m6 l4 push-s1 push-m3 push-l4">
+            <div id="modal_confirmacao_empy_crono" class="modal">
+                <div class="modal-content">
+                    <h4>Deletar Todos Registros Cronológicos?</h4>
+                    <p class="red-text">Está ação é irreversível!</p>
+                </div>
+                <div class="modal-footer">
+                    <form action="/admin/cronologia/empy" method="post">
+                        <button type="submit" class="btn red left">Sim, Deletar</button>
+                        <a class="modal-close right btn-flat">Cancelar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+
+    <div class="row">
+        <div class="col s12">
+            <ul class="collapsible no-shadow no-border">
+                {{#each cronos}}
+                    <li>
+                        <div class="collapsible-header transparent">
+                            <div class="col s9">
+                                <span class="upper"><span class="nums"> {{num}}</span> | {{acao}}</span>
+                            </div>
+                            <div class="col s2">
+                                <span class="grey-text" id="when_{{num}}"></span>
+                            </div>
+                            <div class="col s1">
+                                <i class="fas fa-plus" style="font-size: 1rem;"></i>
+                            </div>
+                        </div>
+                        <div class="collapsible-body black-text blur-5">
+                            <span class="primary-text truncate">
+                                <small>{{autor}}</small>
+                            </span> <br>
+                            <blockquote>
+                                {{desc}}
+                            </blockquote>
+                            <small><span id="date_{{num}}">{{date}}</span></small>
+                        </div>
+                    </li>
+                {{else}}
+                    <div class="row">
+                        <div class="col s10 m8 l6 push-s1 push-m2 push-l3 top-50">
+                            <div class="card blue-grey darken-3 white-text">
+                                <div class="card-content">
+                                    <span class="card-title">Não há Registros</span>
+                                    <blockquote>
+                                        De momento não há Registros Cronológicos!
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12 center">
+            <ul class="pagination">
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    var pages = document.getElementById('pages').textContent;
+    var _page = document.getElementById('_page').textContent;
+    var cronos_count = document.getElementById('cronos_count').textContent;
+    var hoje = new Date().getDate();
+    var _month = new Date().getMonth()
+    var month = Number(_month + 1);
+    var monthS = month.toString().replace('12', 'Dez').replace('11', 'Nov').replace('10', 'Out').replace('9', 'Set').replace('8', 'Ago').replace('7', 'Jul').replace('6', 'Jun').replace('5', 'Mai').replace('4', 'Abr').replace('3', 'Mar').replace('2', 'Fev').replace('1', 'Jan');
+    var year = new Date().getFullYear().toString();
+    var diferenca;
+
+    var cronos_primeiro = Number(document.getElementsByClassName('nums')[0].textContent);
+    var cronos_ultimo = Number(Number(document.getElementsByClassName('nums')[0].textContent - 99));
+
+    if(cronos_ultimo < 1) cronos_ultimo = 1;
+
+
+    document.getElementById('cronos_primeiro').innerText = cronos_primeiro;
+    document.getElementById('cronos_ultimo').innerText = cronos_ultimo;
+
+
+    for(let cont = 1; cont <= pages; cont++) {
+        document.getElementsByClassName('pagination')[0].innerHTML += `<li id="page_${cont}"><a href="/admin/cronologia/page/${cont}">${cont}</a></li>` 
+    }
+
+    document.getElementById('page_' + _page).classList.add('active');
+
+    for(let cont = cronos_ultimo; cont <= cronos_primeiro; cont++) {
+        if (document.getElementById('date_' + cont).textContent.toString().substr(16,5).replace(' ', '') == year) {
+            if(document.getElementById('date_' + cont).textContent.toString().substr(10,4).replace(' ', '') == monthS) {
+                diferenca = Number(hoje - document.getElementById('date_' + cont).textContent.toString().substr(6,2));
+                if(diferenca == 0) {
+                    diferenca = 'hoje';
+                } else if(diferenca == 1) {
+                    diferenca = 'ontem'
+                } else if(diferenca == 2) {
+                    diferenca = 'antes de ontem'
+                } else if(diferenca == 3) {
+                    diferenca = 'há 3 dias'
+                } else if(diferenca == 4) {
+                    diferenca = 'há 4 dias'
+                } else if(diferenca == 5) {
+                    diferenca = 'há 5 dias'
+                } else if(diferenca == 6) {
+                    diferenca = 'há 6 dias'
+                } else if(diferenca == 7) {
+                    diferenca = 'semana passada'
+                } else {
+                    diferenca = ''
+                }
+            }
+            else {
+                diferenca = '+1 mês'
+            }
+        } else {
+            diferenca = '+1 ano'
+        }
+
+        document.getElementById('when_' + cont).innerText = diferenca;
+    }
+</script>

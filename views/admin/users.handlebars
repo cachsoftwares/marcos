@@ -1,0 +1,99 @@
+<div class="container top-50">
+    <h1 class="is-size-1 upper-text">Listagem dos Funcionários</h1>
+    <hr>
+
+    <div class="has-text-right mb-6">
+        <a href="/admin/user/cadastro" class="button primary">Cadastrar</a>
+    </div>
+
+    <small class="primary-text"><span id="admin_count">{{admins_count}}</span> Administrador(es)</small>
+    {{#each admins}}
+    <div class="box primary-opac">
+        <div class="columns is-vcentered">
+            <article class="media column is-10">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img class="status {{status}}" src="/img/users/{{foto}}" />
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{nome}}</strong> <span class="{{mode}}">{{mode}}</span>
+                            <br />
+                            <span class="admin_ident">{{ident}}</span>
+                        </p>
+                    </div>
+                </div>
+            </article>
+            <div class="column is-2 is-offset-1 admin_delete_content">
+                <form action="/admin/delete/admin/{{ident}}" method="post">
+                    <button type="submit">
+                        <i class="bx bx-minus has-text-warning"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="box has-text-centered">
+        <p class="is-size-6 low-text">Sem Administrador(es)</p>
+    </div>
+    {{/each}}
+
+
+    <small class="primary-text">{{users_count}} Funcionário(s) | {{users_online_count}} online(s)</small>
+    {{#each users}}
+    <div class="box">
+        <div class="columns is-vcentered">
+            <article class="media column is-8">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <img class="status {{status}}" src="/img/users/{{foto}}" />
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong>{{nome}}</strong> <span class="{{mode}}">{{mode}}</span>
+                            <br />
+                            <span class="tag primary has-text-light">{{ident}}</span>
+                            <span class="tag">{{senha}}</span>
+                        </p>
+                    </div>
+                </div>
+            </article>
+            <div class="column is-2 has-text-right">
+                <form action="/admin/cadastro/admin/{{ident}}" method="post">
+                    <button type="submit">
+                        <i class="bx bx-plus has-text-success"></i>
+                    </button>
+                </form>
+            </div>
+
+            <div class="column is-2 has-text-right">
+                <form action="/admin/user/delete/{{ident}}" method="post">
+                    <button type="submit">
+                        <span class="tag is-delete has-text-danger"></span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="box has-text-centered">
+        <p class="is-size-6 low-text">Sem Funcionários(es)</p>
+    </div>
+    {{/each}}
+</div>
+
+<script>
+
+    var admin_count = document.getElementById('admin_count').textContent;
+
+    for (let cont = 0; cont < admin_count; cont++) {
+        if (document.getElementsByClassName('admin_ident')[cont].textContent == '999999999') {
+            document.getElementsByClassName('admin_delete_content')[cont].classList.add('is-hidden');
+        }
+    }
+</script>

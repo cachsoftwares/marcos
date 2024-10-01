@@ -1,0 +1,129 @@
+<div class="columns is-centered">
+    <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-4-desktop">
+        <div class="card">
+            <div class="card-content">
+                <div class="media">
+                    <div class="media-left">
+                        <figure class="image is-48x48">
+                            <img class="is-rounded" src="/img/users/{{userLogado.foto}}" alt="{{userLogado.nome}}" />
+                        </figure>
+                    </div>
+                    <div class="media-content">
+                        <p class="title is-4">{{userLogado.nome}}</p>
+                        <p class="subtitle is-6">{{userLogado.ident}}</p>
+                    </div>
+                </div>
+
+                <div class="content">
+                    <p class="low-text is-size-7">desde {{userLogado.date}}</p>
+
+                    <div class="box buttons mt-5">
+                        <a href="/user/edit/{{userLogado.ident}}" class="button is-ghost">Atualizar dados</a>
+                        <a href="/user/edit/photo/{{userLogado.ident}}" class="button is-ghost">Atualizar Foto</a>
+                        <form action="/user/edit/photo" method="post">
+                            <input type="hidden" name="ident" value="{{userLogado.ident}}">
+
+                            <button type="submit" class="button is-ghost">Remover Foto</button>
+                        </form>
+                    </div>
+
+                    {{#if admin}}
+                    <p class="is-size-4 upper-text has-text-centered primary-text">Ferramentas de Administrador</p>
+                    <div class="box buttons mt-5">
+                        <a href="/admin/users">
+                            <div class="tags are-large has-addons">
+                                <span class="tag primary-text">
+                                    <i class="bx bx-group bx-sm"></i>
+                                </span>
+                                <span class="tag primary">Meus Funcionários</span>
+                            </div>
+                        </a>
+                        <a href="/admin/users">
+                            <div class="tags are-large has-addons">
+                                <span class="tag primary-text">
+                                    <i class="bx bx-chart bx-sm"></i>
+                                </span>
+                                <span class="tag primary">Estatísticas</span>
+                            </div>
+                        </a>
+
+                        <a href="/admin/produto/cadastro">
+                            <div class="tags are-large has-addons">
+                                <span class="tag primary-text">
+                                    <i class="bx bx-plus bx-sm"></i>
+                                </span>
+                                <span class="tag primary">Produto</span>
+                            </div>
+                        </a>
+
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-8-desktop">
+        <div class="box primary">
+            <div class="columns is-multiline">
+                {{#each vendas}}
+                <div class="column is-half">
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <strong class="upper-text is-skeleton">
+                                            <span>{{nome}}</span>
+                                            <span><sup>{{estoque}}</sup></span>
+                                        </strong><br>
+
+                                        <span class="tag is-skeleton">{{variacao}}</span>
+                                        <span class="tag is-skeleton">{{especificidade}}</span>
+                                        <span class="tag is-skeleton">{{origem}}</span>
+                                        <br />
+                                    </p>
+                                    <div class="tags has-addons">
+                                        <span class="tag is-skeleton">{{preco_venda}}KZ</span>
+                                        <span class="tag is-skeleton">x</span>
+                                        <span class="tag is-skeleton">{{quantidade}}UNI</span>
+                                    </div>
+                                    <div class="tags has-addons">
+                                        <span class="tag is-large is-skeleton">TOTAL</span>
+                                        <span class="tag is-large is-skeleton primary">{{total}}KZ</span>
+                                    </div>
+                                    <form method="post" action="/venda/remover/{{_id}}">
+                                        <input type="hidden" name="quantidade" value="{{quantidade}}">
+                                        <input type="hidden" name="id" value="{{prod_id}}">
+                                        <button type="submit"
+                                            class="button is-skeleton is-danger has-text-white is-small"><i
+                                                class="bx bx-x"></i></button>
+                                    </form>
+                                </div>
+                            </div>
+                        </article>
+
+
+                    </div>
+                </div>
+                {{else}}
+
+                <div class="column is-12 has-text-centered">
+                    <p class="is-size-4 upper-text">Sem Vendas</p>
+                    <p class="is-size-6">Após Realizares uma Venda, alistará-se aqui</p>
+                </div>
+
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    setTimeout(() => {
+        setInterval(() => {
+            if (document.querySelector('.is-skeleton')) {
+                document.querySelector('.is-skeleton').classList.remove('is-skeleton');
+            }
+        }, 50);
+    }, 100);
+</script>

@@ -1,0 +1,263 @@
+{{#if user}}
+
+{{>_tools}}
+
+<div class="row">
+    <div class="col m2 push-m10 fixed-content padd-0 blur-10">
+        <div class="col hide-on-small-only m3 l2 padd-0">
+            <ul class="section table-of-contents">
+                <li><a href="#recomendacao"><i class="fas fa-award"></i>Recomendações</a></li>
+                <li><a href="#manual"><i class="fas fa-book"></i>Manual de Uso</a></li>
+                <li><a href="#faqs"><i class="fas fa-question-circle"></i>FAQs</a></li>
+                <li><a href="#desenvolvedores"><i class="fas fa-user-astronaut"></i>Desenvolvedores do Sistema</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<section id="recomendacao">
+    <div class="row">
+        <h4>
+            <i class="fas fa-award"></i>
+            Recomendações
+        </h4>
+        <hr><br>
+
+        <div class="row">
+            <div class="col s10 m4 push-s1">
+                <div class="card recomendacao center">
+                    <br>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fab fa-windows fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            <i class="fab fa-apple fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fab fa-linux fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            <i class="fab fa-android fa-4x"></i>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-action left-align">
+                        Compatível com
+
+                        <blockquote>
+                            <ul>
+                                <li>Windows</li>
+                                <li>MacOS</li>
+                                <li>Linux</li>
+                                <li>Android</li>
+                                <li>...mais</li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="col s10 m4 push-s1">
+                <div class="card recomendacao center">
+                    <br>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fas fa-desktop fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            <i class="fas fa-laptop fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fas fa-tablet fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            <i class="fas fa-mobile fa-4x"></i>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-action left-align">
+                        Compatível com
+                        <blockquote>
+                            <ul>
+                                <li>Computador <small>(Portátil e Mesa)</small></li>
+                                <li>Tabletes</li>
+                                <li>Smartphones <small>(Telefone)</small></li>
+                                <li>SmartTV e SmartWatch <small>(TV e Relógio Inteligente)</small></li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+            <div class="col s10 m4 push-s1">
+                <div class="card recomendacao center">
+                    <br>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fab fa-chrome fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            <i class="fab fa-firefox-browser fa-4x"></i>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s6">
+                            <i class="fab fa-safari fa-4x"></i>
+                        </div>
+                        <div class="col s6">
+                            {{!-- <i class="fab fa-mobile fa-4x"></i> --}}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="card-action left-align">
+                        <span class="primary-text number">Recomendamos</span> Navegadores Atualizados como
+                        <blockquote>
+                            <ul>
+                                <li>Google Chrome <small>(+115.0.5790.170)</small></li>
+                                <li>Mozila FireFox <small>(+114.0.1)</small></li>
+                                <li>Safari <small>(v)</small></li>
+                                <li>sem excessões</li>
+                            </ul>
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<section id="manual">
+    <div class="row">
+        <h4>
+            <i class="fas fa-book"></i>
+            Manual de Uso
+        </h4>
+        <hr><br>
+
+        <div class="row">
+            <div class="col s10 m8 push-s1 push-m2">
+
+                <div class="card blur-10">
+                    <div class="card-content">
+                        <span class="card-title">GERAL</span>
+
+                        <blockquote>
+                            <i class="fas fa-sign-out-alt red-text"></i> Serve para Terminar Sessão | Fechar a Conta.
+                            <br><br>
+                            <i class="fas fa-angle-up"></i> Serve para Mostrar mais Detalhes. O Inverso Oculta os
+                            mesmos.
+                        </blockquote>
+                    </div>
+                </div>
+
+                {{#if admin}}
+
+                <div class="card blur-10">
+                    <div class="card-content">
+                        <span class="card-title">FERRAMENTAS DE ADMINSTRADORES</span>
+
+                        <blockquote>
+                            <i class="fas fa-edit"></i> Serve para Atualizar Informações da Sua Conta, de um Produto.
+                            <br><br>
+                            <i class="fas fa-camera"></i> Serve para Atualizar a Foto da Sua Conta.
+                            <br><br>
+                            <i class="fas fa-times red-text"></i> Serve para Deletar.
+                            <br><br>
+                            <i class="fas fa-minus red-text"></i> Serve para Remover.
+                            <br><br>
+                            <i class="fas fa-trash red-text"></i> Serve para Esvaziar.
+
+                        </blockquote>
+                    </div>
+                </div>
+                {{else}}
+
+                <div class="card blur-10">
+                    <div class="card-content">
+                        <span class="card-title">FERRAMENTAS ÚTEIS</span>
+
+                        <blockquote>
+                            <i class="fas fa-edit"></i> Serve para Atualizar Informações da Sua Conta.
+                            <br><br>
+                            <i class="fas fa-camera"></i> Serve para Atualizar a Foto da Sua Conta.
+                            <br><br>
+                            <i class="fas fa-minus red-text"></i> Serve para Remover.
+                            <br><br>
+                        </blockquote>
+                    </div>
+                </div>
+                {{/if}}
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="faqs">
+    <div class="row">
+        <h4>
+            <i class="fas fa-question-circle"></i>
+            FAQs
+        </h4>
+        <hr><br>
+
+        <div class="row">
+            <ul class="collapsible expandable">
+                <li>
+                    <div class="collapsible-header blur-10">
+                        Terminar Sessão | Fechar a Conta
+                    </div>
+                    <div class="collapsible-body primary white-text">
+                        <span>
+                            Terminar a Sessão, Fechar a Conta ou Sair do Aplicativo não Afeta os dados.
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+{{/if}}
+
+<section id="desenvolvedores">
+    <div class="row">
+        <h4>
+            <i class="fas fa-user-astronaut"></i>
+            Desenvolvedores do Sistema
+        </h4>
+        <hr><br>
+
+        <div class="col s10 m6 l5 push-s1 push-l1">
+            <div class="card">
+                <div class="card-content">
+                    <span class="btn-floating halfway-fab"><i class="fas fa-laptop-code"></i></span>
+                    <span class="card-title">Vladmir Cach</span>
+                    <small class="primary-text upper">P r o g r a m a d o r</small>
+                    <blockquote>
+                        Estudante Universitário (INSTIC) de <span id="idade_vladmir"></span> anos frequentando o
+                        Curso Eng. Informática <br><br>
+                        Desenvolvedor de Sistema há <span id="experiencia_vladmir"></span> anos com especialidade em
+                        Aplicações WEB (WebSite)
+                    </blockquote>
+                </div>
+                <div class="card-action">
+                    <span class="number truncate primary-text">945 217 566</span> <br>
+                    <span class="number truncate primary-text">vladmircach333@gmail.com</span> <br>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var year = new Date().getFullYear();
+
+    document.getElementById('idade_vladmir').innerText = Number(year - 2001);
+    document.getElementById('experiencia_vladmir').innerText = Number(year - 2016);
+
+</script>

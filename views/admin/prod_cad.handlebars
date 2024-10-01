@@ -1,0 +1,95 @@
+<div class="columns">
+
+    <div class="column 
+                            is-10-mobile is-offset-1-mobile
+                            is-8-tablet is-offset-2-tablet
+                            is-6-desktop is-offset-3-desktop">
+
+        <h1 class="is-size-1 has-text-centered upper-text mb-5">Dados do Produto</h1>
+        <form action="/admin/produto/cadastro" method="post">
+            <div class="columns is-mobile is-multiline is-vcentered">
+                <div class="field column is-12-mobile is-8-tablet">
+                    <label class="label">Nome</label>
+                    <div class="control">
+                        <input name="nome" id="nome" class="input" type="text" value="{{prod_clone.nome}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Validade</label>
+                    <div class="control">
+                        <input name="validade" id="validade" class="input" type="date" value="{{prod_clone.validade}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Variação</label>
+                    <div class="control">
+                        <input name="variacao" id="variacao" class="input" type="text" value="{{prod_clone.variacao}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Especificação</label>
+                    <div class="control">
+                        <input name="especificidade" id="especificidade" class="input" type="text"
+                            value="{{prod_clone.especificidade}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Origem</label>
+                    <div class="control">
+                        <input name="origem" id="origem" class="input" type="text" value="{{prod_clone.origem}}">
+                    </div>
+                </div>
+
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Estoque</label>
+                    <div class="control">
+                        <input name="estoque" id="estoque" class="input" type="number" value="{{prod_clone.estoque}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Preço de Compra</label>
+                    <div class="control">
+                        <input name="preco_compra" id="preco_compra" class="input" type="number"
+                            value="{{prod_clone.preco_compra}}">
+                    </div>
+                </div>
+
+                <div class="field column is-12-mobile is-4-tablet">
+                    <label class="label">Preço de Venda</label>
+                    <div class="control">
+                        <input name="preco_venda" id="preco_venda" class="input" type="number"
+                            value="{{prod_clone.preco_venda}}">
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column is-6-mobile is-offset-3-mobile is-4-tablet is-offset-4-tablet">
+                    <button type="submit" class="button is-success has-text-light w-100">feito</button>
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+<div class="columns unselected">
+    <div class="column is-10-mobile is-6-tablet is-4-desktop is-offset-1-mobile is-offset-3-tablet is-offset-4-desktop">
+        {{#each erros}}
+        <div class="error_msg box py-3 has-background-danger has-text-white has-text-centered">
+            <p class="flash-msg">
+                {{texto}}
+            </p>
+        </div>
+        {{else}}
+
+        {{/each}}
+    </div>
+</div>
