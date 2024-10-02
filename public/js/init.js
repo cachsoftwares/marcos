@@ -22,3 +22,48 @@ function ver_senha() {
     }
     
 }
+
+
+// FORMATAÇÃO DE NÚMBEROS EM ESCALA GOLBAL
+var money_number = new Intl.NumberFormat(
+    'en-US',
+    {
+        style: 'currency',
+        currency: 'AOA'
+    }
+);
+
+
+var money_format_count = document.getElementsByClassName('money_format').length;
+var number_format_count = document.getElementsByClassName('number_format').length;
+var uni_format_count = document.getElementsByClassName('uni_format').length;
+
+if(money_format_count > 0) {
+    for (let cont = 0; cont < money_format_count; cont++) {
+        document.getElementsByClassName('money_format')[cont].innerText = money_number.format(
+            document.getElementsByClassName('money_format')[cont].textContent
+        ).toString()
+        .replace('AOA', '')
+        .replace('.00', 'KZ');
+    }
+}
+
+if(number_format_count > 0) {
+    for (let cont = 0; cont < number_format_count; cont++) {
+        document.getElementsByClassName('number_format')[cont].innerText = money_number.format(
+            document.getElementsByClassName('number_format')[cont].textContent
+        ).toString()
+        .replace('AOA', '')
+        .replace('.00', '');
+    }
+}
+
+if(uni_format_count > 0) {
+    for (let cont = 0; cont < uni_format_count; cont++) {
+        document.getElementsByClassName('uni_format')[cont].innerText = money_number.format(
+            document.getElementsByClassName('uni_format')[cont].textContent
+        ).toString()
+        .replace('AOA', '')
+        .replace('.00', ' uni');
+    }
+}

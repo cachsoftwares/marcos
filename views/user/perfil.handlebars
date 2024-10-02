@@ -1,5 +1,5 @@
-<div class="columns is-centered">
-    <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-4-desktop">
+<div class="columns is-multiline is-centered p-3">
+    <div class="column is-12-mobile is-6-tablet is-4-desktop">
         <div class="card">
             <div class="card-content">
                 <div class="media">
@@ -17,6 +17,54 @@
                 <div class="content">
                     <p class="low-text is-size-7">desde {{userLogado.date}}</p>
 
+                    {{#if admin}}
+                    <p class="is-size-4 upper-text has-text-centered primary-text">Ferramentas de Administrador</p>
+                    <div class="buttons mt-5 p-0">
+                        <div class="columns is-multiline">
+                            <div class="column is-full">
+                                <a href="/admin/users">
+                                    <div class="tags are-large has-addons">
+                                        <span class="tag primary-text">
+                                            <i class="bx bx-group bx-sm"></i>
+                                        </span>
+                                        <span class="tag primary">Funcionários</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="column is-full">
+                                <a href="/admin/users">
+                                    <div class="tags are-large has-addons">
+                                        <span class="tag primary-text">
+                                            <i class="bx bx-chart bx-sm"></i>
+                                        </span>
+                                        <span class="tag primary">Estatísticas</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="column is-full">
+                                <a href="/admin/estoque">
+                                    <div class="tags are-large has-addons">
+                                        <span class="tag primary-text">
+                                            <i class="bx bx-archive bx-sm"></i>
+                                        </span>
+                                        <span class="tag primary">Estoque</span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="column is-full">
+                                <a href="/admin/produto/cadastro">
+                                    <div class="tags are-large has-addons">
+                                        <span class="tag primary-text">
+                                            <i class="bx bx-plus bx-sm"></i>
+                                        </span>
+                                        <span class="tag primary">Produto</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{/if}}
+
                     <div class="box buttons mt-5">
                         <a href="/user/edit/{{userLogado.ident}}" class="button is-ghost">Atualizar dados</a>
                         <a href="/user/edit/photo/{{userLogado.ident}}" class="button is-ghost">Atualizar Foto</a>
@@ -26,53 +74,52 @@
                             <button type="submit" class="button is-ghost">Remover Foto</button>
                         </form>
                     </div>
-
-                    {{#if admin}}
-                    <p class="is-size-4 upper-text has-text-centered primary-text">Ferramentas de Administrador</p>
-                    <div class="box buttons mt-5">
-                        <a href="/admin/users">
-                            <div class="tags are-large has-addons">
-                                <span class="tag primary-text">
-                                    <i class="bx bx-group bx-sm"></i>
-                                </span>
-                                <span class="tag primary">Meus Funcionários</span>
-                            </div>
-                        </a>
-                        <a href="/admin/users">
-                            <div class="tags are-large has-addons">
-                                <span class="tag primary-text">
-                                    <i class="bx bx-chart bx-sm"></i>
-                                </span>
-                                <span class="tag primary">Estatísticas</span>
-                            </div>
-                        </a>
-
-                        <a href="/admin/produto/cadastro">
-                            <div class="tags are-large has-addons">
-                                <span class="tag primary-text">
-                                    <i class="bx bx-plus bx-sm"></i>
-                                </span>
-                                <span class="tag primary">Produto</span>
-                            </div>
-                        </a>
-
-                    </div>
-                    {{/if}}
                 </div>
             </div>
         </div>
     </div>
-    <div class="column is-10-mobile is-offset-1-mobile is-6-tablet is-8-desktop">
-        <div class="box primary">
+    <div class="column is-12-mobile is-10-tablet is-8-desktop mtop-negativo-desktop">
+        <div class="p-0">
             <div class="columns is-multiline">
+                <div class="column is-full has-text-centered">
+                    <p class="is-size-3 upper-text">Suas Vendas</p>
+
+                </div>
+                <div class="column is-full">
+                    <div class="box has-text-centered">
+                        <div class="columns">
+                            <div class="column is-8">
+                                <p class="is-size-1 money"><span class="money_format" id="TOTAL">xx</span></p>
+                            </div>
+                            <div class="column is-4">
+                                <form action="/relatorio/cadastro" method="post">
+                                    <input type="hidden" id="total_finalizar" name="total_finalizar">
+                                    <input type="hidden" id="quantidades_finalizar" name="quantidades_finalizar">
+                                    <button type="submit" class="button is-large is-success has-text-light mt-2">Finalizar</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="columns is-multiline" id="vendas">
                 {{#each vendas}}
                 <div class="column is-half">
-                    <div class="box">
+                    <div class="box venda primary">
                         <article class="media">
                             <div class="media-content">
                                 <div class="content">
+                                    {{#if ../admin}}
+                                    <form method="post" action="/venda/remover/{{_id}}">
+                                        <input type="hidden" name="quantidade" value="{{quantidade}}">
+                                        <input type="hidden" name="id" value="{{prod_id}}">
+                                        <button type="submit"
+                                            class="button is-skeleton is-ghost has-background-danger-95 has-text-danger is-small"><i
+                                                class="bx bx-x"></i></button>
+                                    </form>
+                                    {{/if}}
                                     <p>
-                                        <strong class="upper-text is-skeleton">
+                                        <strong class="upper-text is-skeleton has-text-light">
                                             <span>{{nome}}</span>
                                             <span><sup>{{estoque}}</sup></span>
                                         </strong><br>
@@ -83,21 +130,15 @@
                                         <br />
                                     </p>
                                     <div class="tags has-addons">
-                                        <span class="tag is-skeleton">{{preco_venda}}KZ</span>
+                                        <span class="tag is-skeleton money_format">{{preco_venda}}</span>
                                         <span class="tag is-skeleton">x</span>
-                                        <span class="tag is-skeleton">{{quantidade}}UNI</span>
+                                        <span class="tag is-skeleton uni_format quantidade">{{quantidade}}</span>
                                     </div>
                                     <div class="tags has-addons">
                                         <span class="tag is-large is-skeleton">TOTAL</span>
-                                        <span class="tag is-large is-skeleton primary">{{total}}KZ</span>
+                                        <span
+                                            class="tag is-large is-skeleton is-success has-text-light total money_format">{{total}}</span>
                                     </div>
-                                    <form method="post" action="/venda/remover/{{_id}}">
-                                        <input type="hidden" name="quantidade" value="{{quantidade}}">
-                                        <input type="hidden" name="id" value="{{prod_id}}">
-                                        <button type="submit"
-                                            class="button is-skeleton is-danger has-text-white is-small"><i
-                                                class="bx bx-x"></i></button>
-                                    </form>
                                 </div>
                             </div>
                         </article>
@@ -119,11 +160,27 @@
 </div>
 
 <script>
+    var venda_count = document.getElementsByClassName('venda').length;
+    var TOTAL = 0;
+    var TOTAL_quantidade = 0;
+
+    for (let cont = 0; cont < venda_count; cont++) {
+        TOTAL += Number(document.getElementsByClassName('total')[cont].textContent);
+        TOTAL_quantidade += Number(document.getElementsByClassName('quantidade')[cont].textContent);
+    }
+
+    document.getElementById('TOTAL').innerText = TOTAL;
+    document.getElementById('total_finalizar').value = TOTAL;
+    document.getElementById('quantidades_finalizar').value = TOTAL_quantidade;
+
+</script>
+
+<script>
     setTimeout(() => {
         setInterval(() => {
             if (document.querySelector('.is-skeleton')) {
                 document.querySelector('.is-skeleton').classList.remove('is-skeleton');
             }
-        }, 50);
-    }, 100);
+        }, 25);
+    }, 50);
 </script>

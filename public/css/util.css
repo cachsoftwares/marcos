@@ -38,15 +38,27 @@ nav ul li,
 
 /* M O B I L E */
 @media only screen and (min-width: 200px) {
-
+    #vendas {
+        height: auto;
+    }
 }
 
 /* T A B L E T */
 @media only screen and (min-width: 760px) {
-
+    #vendas {
+        height: auto;
+    }
 }
 
 /* D E S K T O P */
 @media only screen and (min-width: 1024px) {
 
+    .mtop-negativo-desktop {
+        margin-top: -5rem;
+    }
+
+    #vendas {
+        max-height: 65vh !important;
+        overflow-y: scroll !important;
+    }
 }

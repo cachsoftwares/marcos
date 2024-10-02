@@ -8,10 +8,12 @@ const router = express.Router()
 /* Importando Arquivos */
 require('../models/User')
 require('../models/Prod')
+require('../models/Relatorio')
 
 const db = require('../config/db')
 const User = mongoose.model('users')
 const Prod = mongoose.model('prods')
+const Relatorio = mongoose.model('relatorios')
 const { isAdmin } = require('../helpers/funcs')
 
 function globalDate(how) {
@@ -27,7 +29,7 @@ function globalDate(how) {
     var seconds = new Date().getSeconds()
     var milliseconds = new Date().getMilliseconds()
 
-    if(how == 'hour') {
+    if (how == 'hour') {
         var global_date = hour + ':' + minute + ':' + seconds + ':' + milliseconds
     } else if (how == 'vsmall') {
         var global_date = day + ' · ' + month + ' · ' + year
@@ -215,7 +217,7 @@ router.get('/estoque', isAdmin, (req, res) => {
 })
 
 router.post('/pesquisa', isAdmin, (req, res) => {
-    Prod.find({nome: {$regex: req.body.pesquisa, $options: 'i'}}).sort({ nome: 'asc' }).lean().then((prods) => {
+    Prod.find({ nome: { $regex: req.body.pesquisa, $options: 'i' } }).sort({ nome: 'asc' }).lean().then((prods) => {
         res.render('admin/estoque', { prods: prods })
     }).catch((err) => {
         console.log('Houve um Erro - ' + err)
@@ -393,7 +395,7 @@ router.post('/produto/edit/:id', isAdmin, (req, res) => {
         }
         res.render('admin/prod_edit', { erros: erros, prod: prod })
     } else {
-        Prod.findOne({_id: req.params.id}).then((prod) => {
+        Prod.findOne({ _id: req.params.id }).then((prod) => {
 
             prod.nome = req.body.nome.toUpperCase()
             prod.variacao = req.body.variacao
@@ -404,7 +406,7 @@ router.post('/produto/edit/:id', isAdmin, (req, res) => {
             prod.preco_venda = req.body.preco_venda
             prod.estoque = req.body.estoque
             prod._data = Date.now()
-            
+
             prod.save().then(() => {
                 req.flash('success_msg', 'Produto Atualizado')
                 res.redirect('/admin/estoque')
@@ -422,12 +424,36 @@ router.post('/produto/edit/:id', isAdmin, (req, res) => {
 })
 
 router.get('/estatistica', isAdmin, (req, res) => {
-    Prod.find().sort({vendidos: 'desc'}).limit(5).lean().then((prods) => {
-        res.render('admin/estatistica', { admin: 'admin', prods: prods })
+    Prod.find().sort({ vendidos: 'desc' }).limit(5).lean().then((prods) => {
+        Relatorio.find().sort({ num: 'asc' }).lean().then((relatorios) => {
+            res.render('admin/estatistica', { admin: 'admin', prods: prods, relatorios: relatorios })
+        }).catch((err) => {
+            console.error('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/user/perfil')
+        })
     }).catch((err) => {
         console.error('Houve um Erro - ' + err)
         req.flash('error_msg', 'Houve um Erro')
         res.redirect('/user/perfil')
+    })
+})
+
+router.post('/relatorio/empy', isAdmin, (req, res) => {
+    Relatorio.deleteMany({ __v: 0 }).then(() => {
+        Prod.updateMany({ __v: 0 }, { $set: { vendidos: 0 } }).then(() => {
+            console.error('Dados Resetados')
+            req.flash('success_msg', 'Dados Resetados')
+            res.redirect('/admin/estatistica')
+        }).catch((err) => {
+            console.error('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/admin/estatistica')
+        })
+    }).catch((err) => {
+        console.error('Houve um Erro - ' + err)
+        req.flash('error_msg', 'Houve um Erro')
+        res.redirect('/admin/estatistica')
     })
 })
 

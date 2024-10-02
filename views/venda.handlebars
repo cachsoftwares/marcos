@@ -26,8 +26,7 @@
                         <p>
                             <strong class="upper-text is-skeleton">
                                 <span>{{nome}}</span>
-                                <span><sup>{{estoque}}</sup></span>
-                                <span><sup>{{vendidos}}</sup></span>
+                                <span><sup class="uni_format">{{estoque}}</sup></span>
                             </strong><br>
 
                             <span class="tag is-skeleton">{{variacao}}</span>
@@ -36,7 +35,7 @@
                             <br />
                         </p>
                     </div>
-                    <span class="has-text-right money is-skeleton">{{preco_venda}}KZ</span>
+                    <span class="has-text-right money is-skeleton money_format">{{preco_venda}}</span>
                 </div>
             </article>
 
@@ -86,6 +85,6 @@
             if (document.querySelector('.is-skeleton')) {
                 document.querySelector('.is-skeleton').classList.remove('is-skeleton');
             }
-        }, 50);
-    }, 100);
+        }, 10);
+    }, 50);
 </script>

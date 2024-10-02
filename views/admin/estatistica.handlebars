@@ -9,6 +9,11 @@
     <span class="prod_origem">{{origem}}</span>
     <span class="prod_vendidos">{{vendidos}}</span>
     {{/each}}
+
+    {{#each relatorios}}
+    <span class="relatorio_total">{{total}}</span>
+    <span class="relatorio_quantidade">{{quantidade}}</span>
+    {{/each}}
 </div>
 
 <div class="box column is-10-tablet is-offset-1-tablet is-8-desktop is-offset-2-desktop">
@@ -21,20 +26,40 @@
 
         <script>
 
+            var relatorios_count = document.getElementsByClassName('relatorio_total').length;
+            var relatorio_total_array = [];
+            var relatorio_quantidade_array = [];
+
+            for (let cont = 0; cont < relatorios_count; cont++) {
+                relatorio_total_array.push(document.getElementsByClassName('relatorio_total')[cont].textContent);
+                relatorio_quantidade_array.push(document.getElementsByClassName('relatorio_quantidade')[cont].textContent);
+            }
+            
+
             const ctx_chart_30dias = document.getElementById('chart_30dias');
 
             new Chart(ctx_chart_30dias, {
                 type: 'line',
                 data: {
                     labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30,],
-                    datasets: [{
-                        label: 'Valor',
-                        data: [10500, 11100, 14150, 12500, 10500, 11100, 14150, 12500, 20300, 7100, 14150, 14200, 10500, 33100, 14150, 12500, 16500, 11100, 10150, 12500],
-                        borderWidth: 2,
-                        borderColor: '#009999'
-                    }]
+                    datasets: [
+                        {
+                            label: 'Valor',
+                            data: relatorio_total_array,
+                            borderWidth: 2,
+                            borderColor: '#009999'
+                        },
+                        {
+                            label: 'QTD',
+                            data: relatorio_quantidade_array,
+                            borderWidth: 1,
+                            borderColor: '#333',
+                            hidden: true
+                        }
+                    ]
                 },
                 options: {
+                    responsive: true,
                     scales: {
                         y: {
                             beginAtZero: false
@@ -58,6 +83,96 @@
                 < 769px</span>
         </div>
         </p>
+    </div>
+
+</div>
+
+<div class="columns is-mobile p-2" style="overflow-x: scroll;">
+    <div class="column is-12-mobile is-6-tablet is-4-desktop">
+        <div class="box has-background-primary-00">
+            <div class="columns is-mobile">
+                <div class="column is-3">
+                    <figure class="image is-64x64">
+                        <img class="is-rounded" src="/img/logo/2.png">
+                    </figure>
+                </div>
+                <div class="column is-half">
+                    <p class="is-size-4 upper-text has-text-light">Relatório Geral</p>
+                </div>
+                <div class="column is-1">
+                    <span class="tag is-rounded">TODOS</span>
+                </div>
+            </div>
+            <hr>
+            <div class="columns">
+                <div class="tags has-addons">
+                    <div class="tag is-large upper-text">total</div>
+                    <div class="tag is-large has-background-primary has-text-light money_format" id="TOTAL">xx</div>
+                </div>
+            </div>
+            <div class="columns mt-3">
+                <div class="tags has-addons">
+                    <div class="tag is-large upper-text">QTD</div>
+                    <div class="tag is-large has-background-primary has-text-light uni_format" id="TOTAL_QTD">xx</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{#each relatorios}}
+    <div class="column is-12-mobile is-6-tablet is-4-desktop">
+        <div class="box">
+            <div class="columns is-mobile">
+                <div class="column is-3">
+                    <figure class="image is-64x64">
+                        <img class="is-rounded" src="/img/users/{{user_foto}}">
+                    </figure>
+                </div>
+                <div class="column is-half">
+                    <p class="is-size-5">{{user_nome}}</p>
+                    <p class="is-size-6 low-text">{{user_ident}}</p>
+                    <p class="is-size-7 low-text">{{_data}}</p>
+                </div>
+                <div class="column is-1">
+                    <span class="tag is-rounded">{{num}}</span>
+                </div>
+            </div>
+            <hr>
+            <div class="columns">
+                <div class="tags has-addons">
+                    <div class="tag is-large upper-text">total</div>
+                    <div class="tag is-large primary money_format total">{{total}}</div>
+                </div>
+            </div>
+            <div class="columns mt-3">
+                <div class="tags has-addons">
+                    <div class="tag is-large upper-text">QTD</div>
+                    <div class="tag is-large primary uni_format quantidade">{{quantidade}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+        <div class="column is-12-mobile is-6-tablet is-4-desktop">
+        <div class="box has-background-primary-00">
+            <div class="columns is-mobile">
+                <div class="column is-3">
+                    <figure class="image is-64x64">
+                        <img class="is-rounded" src="/img/logo/2.png">
+                    </figure>
+                </div>
+                <div class="column is-half has-text-centered">
+                    <p class="is-size-4 upper-text has-text-light">Limpar Dados</p>
+                    <p class="is-size-7 low-text">Esta ação também Zera os as quantidades Vendidas dos Produtos</p>
+                </div>
+            </div>
+            <hr>
+            <div class="columns is-centered">
+                <form action="/admin/relatorio/empy" method="post">
+                    <button type="submit" class="button is-danger has-text-light is-large">limpar</button>
+                </form>
+            </div>
+            
+        </div>
     </div>
 </div>
 
@@ -107,3 +222,15 @@
         </script>
     </div>
 </div>
+
+<script>
+    var TOTAL = 0;
+    var TOTAL_QTD = 0;
+    for(let cont = 0; cont < relatorios_count; cont++) {
+        TOTAL += Number(document.getElementsByClassName('total')[cont].textContent);
+        TOTAL_QTD += Number(document.getElementsByClassName('quantidade')[cont].textContent);
+    }
+
+    document.getElementById('TOTAL').innerText = TOTAL;
+    document.getElementById('TOTAL_QTD').innerText = TOTAL_QTD;
+</script>

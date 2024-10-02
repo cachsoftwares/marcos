@@ -11,6 +11,7 @@ const passport = require('passport')
 require('./models/User')
 require('./models/Prod')
 require('./models/Venda')
+require('./models/Relatorio')
 require('./config/auth')(passport);
 
 
@@ -20,6 +21,7 @@ const db = require('./config/db')
 const User = mongoose.model('users')
 const Prod = mongoose.model('prods')
 const Venda = mongoose.model('vendas')
+const Relatorio = mongoose.model('relatorios')
 const { isAuthed } = require('./helpers/funcs');
 const { isAdmin } = require('./helpers/funcs');
 
@@ -218,6 +220,38 @@ app.post('/venda/remover/:id', isAuthed, (req, res) => {
     })
 })
 
+app.post('/relatorio/cadastro', isAuthed, (req, res) => {
+
+    Relatorio.find().countDocuments().then((relatorios_count) => {
+        const relatorio_cad = {
+            user_ident: req.user.ident,
+            user_nome: req.user.nome,
+            user_foto: req.user.foto,
+            num: Number(relatorios_count + 1),
+            total: req.body.total_finalizar,
+            quantidade: req.body.quantidades_finalizar,
+            _data: globalDate('vsmall')
+        }
+        
+        new Relatorio (relatorio_cad).save().then(() => {
+            Venda.deleteMany({ __v: 0 }).then(() => {
+                console.log('Relatorio Cadastrado')
+                req.flash('success_msg', 'Relatorio Cadastrado')
+                res.redirect('/user/perfil')
+            }).catch((err) => {
+                console.log('Houve um Erro - ' + err)
+                req.flash('error_msg', 'Houve um Erro')
+                res.redirect('/user/perfil')
+            })
+        }).catch((err) => {
+            console.log('Houve um Erro - ' + err)
+            req.flash('error_msg', 'Houve um Erro')
+            res.redirect('/user/perfil')
+        })
+    })
+})
+
+
 app.post('/pesquisa', (req, res) => {
 
     var admin
@@ -247,7 +281,7 @@ app.get('/info', (req, res) => {
 })
 
 
-const PORT = process.env.PORT || 3000
+const PORT = 3000
 app.listen(PORT, () => {
     console.log('Servidor rodando  -- localhost:' + PORT)
 })
